@@ -43,19 +43,7 @@ module "naming" {
   version = ">= 0.3.0"
 }
 
-
-# Note: You will need Global Reader role to get the object id of the Azure DataBricks service principal
-# Get the application IDs for APIs published by Microsoft
-data "azuread_application_published_app_ids" "well_known" {}
-# Get the object id of the Azure DataBricks service principal
-data "azuread_service_principal" "this" {
-  client_id = data.azuread_application_published_app_ids.well_known.result["AzureDataBricks"]
-}
-
 # This is the module call
-# Do not specify location here due to the randomization above.
-# Leaving location as `null` will cause the module to use the resource group location
-# with a data source.
 module "test" {
   source = "../../"
   # ...
@@ -91,8 +79,6 @@ The following requirements are needed by this module:
 
 The following providers are used by this module:
 
-- <a name="provider_azuread"></a> [azuread](#provider\_azuread)
-
 - <a name="provider_random"></a> [random](#provider\_random) (>= 3.5.0, < 4.0.0)
 
 ## Resources
@@ -100,8 +86,6 @@ The following providers are used by this module:
 The following resources are used by this module:
 
 - [random_integer.region_index](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/integer) (resource)
-- [azuread_application_published_app_ids.well_known](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/application_published_app_ids) (data source)
-- [azuread_service_principal.this](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/service_principal) (data source)
 
 <!-- markdownlint-disable MD013 -->
 ## Required Inputs
@@ -139,7 +123,4 @@ Source: ../../
 Version:
 
 <!-- markdownlint-disable-next-line MD041 -->
-## Data Collection
-
-The software may collect information about you and your use of the software and send it to Microsoft. Microsoft may use this information to provide services and improve our products and services. You may turn off the telemetry as described in the repository. There are also some features in the software that may enable you and Microsoft to collect data from users of your applications. If you use these features, you must comply with applicable law, including providing appropriate notices to users of your applications together with a copy of Microsoft’s privacy statement. Our privacy statement is located at <https://go.microsoft.com/fwlink/?LinkID=824704>. You can learn more about data collection and use in the help documentation and our privacy statement. Your use of the software operates as your consent to these practices.
 <!-- END_TF_DOCS -->

@@ -37,19 +37,7 @@ module "naming" {
   version = ">= 0.3.0"
 }
 
-
-# Note: You will need Global Reader role to get the object id of the Azure DataBricks service principal
-# Get the application IDs for APIs published by Microsoft
-data "azuread_application_published_app_ids" "well_known" {}
-# Get the object id of the Azure DataBricks service principal
-data "azuread_service_principal" "this" {
-  client_id = data.azuread_application_published_app_ids.well_known.result["AzureDataBricks"]
-}
-
 # This is the module call
-# Do not specify location here due to the randomization above.
-# Leaving location as `null` will cause the module to use the resource group location
-# with a data source.
 module "test" {
   source = "../../"
   # ...
